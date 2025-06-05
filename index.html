@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Best-Friend ❤️ Anjali💖</title>
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #ffdde1, #ee9ca7);
+      color: #333;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      padding: 1.5rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #c71585;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      margin-top: 0;
+      color: #d46e8c;
+    }
+    p.love-message {
+      font-size: 1.2rem;
+      max-width: 90%;
+      margin: 0 auto 1.5rem;
+    }
+    .heart {
+      font-size: 2rem;
+      animation: pulse 1s infinite;
+      color: red;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    .photo-gallery {
+      position: relative;
+      width: 90%;
+      max-width: 320px;
+      margin: 2rem auto;
+    }
+    .photo-gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      display: none;
+    }
+    .photo-gallery img.active {
+      display: block;
+    }
+    .photo-gallery button {
+      background: #ff69b4;
+      border: none;
+      padding: 0.6rem 1rem;
+      font-size: 1.2rem;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 0.5rem 1rem;
+      transition: background 0.3s;
+    }
+    .photo-gallery button:hover {
+      background: #ff85c1;
+    }
+
+    .surprise {
+      margin-top: 2rem;
+    }
+    button {
+      background: #ff69b4;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin: 0.5rem;
+    }
+    button:hover {
+      background: #ff85c1;
+    }
+
+    #secretMessage {
+      display: none;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #333;
+      background: #f3b1ba;
+      padding: 1rem;
+      border-radius: 10px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #secretMessage::after {
+      content: "|";
+      animation: blink 0.7s infinite;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .falling-heart {
+      position: fixed;
+      top: 0;
+      font-size: 2rem;
+      animation: fall linear infinite;
+      color: red;
+      z-index: 999;
+      user-select: none;
+      pointer-events: none;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-50px); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      p.love-message {
+        font-size: 1rem;
+      }
+      button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="container" role="main">
+    <div class="heart" aria-hidden="true">❤️</div>
+    <h1>For My Beautiful Best-Friend Anjali !!</h1>
+    <h2>Cuitee 🥰💛</h2> 
+    <p class="love-message">
+      Every moment with you is a gift. This little website is just a tiny way to say how much deep our Friendship💛.
+      
+    </p>
+
+    <div class="photo-gallery" aria-label="Photo gallery of Anjali and friendship moments">
+      <img src="https://i.postimg.cc/sXb94vyh/IMG-20240602-WA0015.jpg" class="active" alt="Photo 1 of Anjali" />
+      <img src="https://i.postimg.cc/T2WcYqqq/IMG-20240530-190917-759.jpg" alt="Photo 2 of Anjali" />
+      <img src="https://i.postimg.cc/d0x8JLhx/IMG-20240530-190920-496.jpg" alt="Photo 3 of Anjali" />
+      <div>
+        <button onclick="prevPhoto()" aria-label="Previous photo">⟨</button>
+        <button onclick="nextPhoto()" aria-label="Next photo">⟩</button>
+      </div>
+    </div>
+
+    <div class="surprise">
+      <button onclick="showMessageAndHearts()" aria-haspopup="true" aria-controls="secretMessage">
+        Click to Reveal Surprise
+      </button>
+    </div>
+
+    <p id="secretMessage" role="region" aria-live="polite" aria-atomic="true"></p>
+
+    <div class="footer">
+      Made with love just for you, Anjali 💕
+    </div>
+  </div>
+
+  <script>
+    let currentPhoto = 0;
+    const photos = document.querySelectorAll('.photo-gallery img');
+
+    function showPhoto(index) {
+      photos.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextPhoto() {
+      currentPhoto = (currentPhoto + 1) % photos.length;
+      showPhoto(currentPhoto);
+    }
+
+    function prevPhoto() {
+      currentPhoto = (currentPhoto - 1 + photos.length) % photos.length;
+      showPhoto(currentPhoto);
+    }
+
+    function showMessageAndHearts() {
+      const message = "Anjali, you are my Best-Friend.💛 I think I again can't find your type of Friend!! I love you more each day My Dear-Best-Friend💛️";
+      const secret = document.getElementById('secretMessage');
+      secret.style.display = 'block';
+      secret.innerText = ''; // Clear message for typing
+
+      let index = 0;
+      const typing = setInterval(() => {
+        secret.innerText += message.charAt(index);
+        index++;
+        if (index >= message.length) clearInterval(typing);
+      }, 50);
+
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'falling-heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+        heart.innerText = '💛❤️';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }
+    }
+  </script>
+</body>
+</html>
